@@ -296,7 +296,7 @@ filterModule <- function(input, output, session, inputdf, fld_name,
   observe({
     # update select box when parent data frame changes
     sel <- isolate(input$filter)
-    newchoices <-  select_(inputdf(),y=fld_name)$y %>% unique %>% sort
+    newchoices <-  select(inputdf(),y=fld_name)$y %>% unique %>% sort
     if(!is.null(sel)){sel <- sel[sel%in%newchoices]}
     updateSelectInput(session,'filter',choices = newchoices,selected = sel)
   })
@@ -334,7 +334,7 @@ filterModule <- function(input, output, session, inputdf, fld_name,
     if(inactive()||bypassed()){
       return(inputdf())
     } else {
-      i <- select_(inputdf(),y=fld_name)$y%in%input$filter
+      i <- select(inputdf(),y=fld_name)$y%in%input$filter
       if(invert()) i <- !i
       return(inputdf()[i,])
     }
@@ -373,7 +373,7 @@ filterSliderModule <- function(input, output, session, inputdf, fld_name,
     if(inactive()||bypassed()){
       return(inputdf())
     } else {
-      y <- select_(inputdf(),y=fld_name)$y
+      y <- select(inputdf(),y=fld_name)$y
       i <- !is.na(y)&y>=(input$filter[1])&y<=(input$filter[2])
       return(inputdf()[i,])
     }
@@ -416,7 +416,7 @@ filterSliderCustom <- function(input, output, session, inputdf, fld_name,
     if(inactive()|bypassed()){
       return(inputdf())
     } else {
-      y <- select_(inputdf(),y=as.name(fld_name))$y
+      y <- select(inputdf(),y=as.name(fld_name))$y
       i <- !is.na(y)&y>=(vals[1]*mod)&y<=(vals[2]*mod)
       return(inputdf()[i,])
     }
